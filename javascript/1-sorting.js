@@ -23,7 +23,10 @@ class RandomArray {
       array[newPos] = temp;
     }
   }
-
+  get copy() {
+    const { array } = this;
+    return array.slice();
+  }
   get display() {
     console.log(this.array);
   }
@@ -32,21 +35,21 @@ class RandomArray {
   // BUBBLE SORT
   bubbleSort() {
     const { array } = this;
-    let temp,
-      swap = false;
+    let swap = false,
+      unsorted = array.length;
 
     do {
       swap = false;
-      for (let i = 0; i < array.length; i++) {
+      for (let i = 0; i < unsorted; i++) {
         if (array[i] > array[i + 1]) {
-          temp = array[i];
+          const temp = array[i];
           array[i] = array[i + 1];
           array[i + 1] = temp;
           swap = true;
         }
       }
+      unsorted--;
     } while (swap);
-    this.display;
   }
 
   //#######################################################
@@ -55,15 +58,34 @@ class RandomArray {
     const { array } = this;
 
     for (let i = 1; i < array.length; i++) {
-      for (let j = 0; j < i; j++) {
-        if (array[i] < array[j]) {
-          const temp = array.splice(i, 1);
-          array.splice(j, 0, temp[0]); //temp is an array with lenght = 1
-          break;
-        }
+      let cur = array[i],
+        j = i - 1;
+      while (j >= 0 && cur < array[j]) {
+        array[j + 1] = array[j];
+        j--;
       }
+      array[j + 1] = cur;
     }
-    this.display;
+  }
+
+  //#######################################################
+  //SELECTION SORT
+  selectionSort() {
+    const { array } = this;
+    let unsorted = 0;
+
+    while (unsorted < array.length) {
+      let min = unsorted;
+      for (let i = unsorted; i < array.length; i++) {
+        if (array[i] < array[min]) min = i;
+      }
+      if (array[min] !== array[unsorted]) {
+        const temp = array[unsorted];
+        array[unsorted] = array[min];
+        array[min] = temp;
+      }
+      unsorted++;
+    }
   }
   //#######################################################
   // MERGE SORT
@@ -81,19 +103,21 @@ class RandomArray {
     };
     const merge = (left, right) => {
       const result = [];
-
-      while (left.length && right.length) {
-        if (left[0] < right[0]) {
-          result.push(left.shift());
+      let i = 0,
+        j = 0;
+      while (i < left.length && j < right.length) {
+        if (left[i] < right[j]) {
+          result.push(left[i]);
+          i++;
         } else {
-          result.push(right.shift());
+          result.push(right[j]);
+          j++;
         }
       }
 
-      return result.concat(left, right);
+      return result.concat(left.slice(i), right.slice(j));
     };
     this.array = mergeSort(array);
-    this.display;
   }
   //#######################################################
   // QUICK SORT
@@ -115,17 +139,22 @@ class RandomArray {
     };
 
     this.array = quickSort(array);
-    this.display;
   }
 }
 
 //-------------------------------------------
 
-const array1 = new RandomArray();
-array1.generate;
+const myArray = new RandomArray();
+myArray.generate;
 
-console.log(array1.quickSort());
+myArray.mergeSort();
+myArray.display;
 
-// array1.suffle;
-// console.log(array1.display);
-// console.log(array1.mergeSort());
+// // TEST
+// myArray.mergeSort();
+// const arr1 = myArray.copy;
+// myArray.suffle;
+// myArray.quickSort();
+// const arr2 = myArray.copy;
+
+// console.log(arr1.every((item, index) => item === arr2[index]));
