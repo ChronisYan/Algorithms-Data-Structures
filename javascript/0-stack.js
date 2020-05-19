@@ -1,20 +1,27 @@
 class Stack {
   constructor() {
+    this.top = -1;
     this.stack = [];
   }
   push(data) {
-    this.stack.push(data);
+    this.top++;
+    this.stack[this.top] = data;
   }
   pop() {
-    this.stack.pop();
+    if (this.top < 0) return "Underflow";
+    const topElement = this.stack[this.top];
+    this.top--;
+    this.stack.length--;
+    return topElement;
   }
-  viewStack() {
-    let str = "";
-    const { stack } = this;
-    for (let i = stack.length - 1; i >= 0; i--) {
-      str += stack[i] + "\n";
-    }
-    return str;
+  peek() {
+    return this.stack[this.top];
+  }
+  isEmtpy() {
+    return this.top === -1;
+  }
+  get length() {
+    return this.top + 1;
   }
 }
 
@@ -24,11 +31,3 @@ myStack.push(8);
 myStack.push(10);
 myStack.push(3);
 myStack.push(5);
-
-console.log(myStack.viewStack());
-
-myStack.pop();
-console.log(myStack.viewStack());
-
-myStack.pop();
-console.log(myStack.viewStack());
