@@ -24,6 +24,7 @@ class LinkedList {
     this.lenght++;
   }
   pop() {}
-  get() {}
-  delete() {}
+  get(index) {}
+  delete(index) {}
+  isEmpty() {}
 }
