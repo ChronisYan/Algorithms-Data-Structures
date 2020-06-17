@@ -146,6 +146,42 @@ void merge_sort(T arr[], int start, int end)
     merge<T>(arr, start, mid, end);
 }
 
+// QUICK SORT
+template <class T>
+int partition(T arr[], int low, int high)
+{
+    T pivot = arr[high];
+    int i = (low - 1);
+    for (int j = low; j <= high - 1; j++)
+    {
+        if (arr[j] < pivot)
+        {
+            i++;
+            T temp = arr[j];
+            arr[j] = arr[i];
+            arr[i] = temp;
+        }
+    }
+    T temp = arr[high];
+    arr[high] = arr[i + 1];
+    arr[i + 1] = temp;
+    return (i + 1);
+}
+
+template <class T>
+void quick_sort(T arr[], int low, int high)
+{
+    if (low >= high)
+    {
+        return;
+    }
+
+    int pi = partition(arr, low, high);
+
+    quick_sort(arr, low, pi - 1);
+    quick_sort(arr, pi + 1, high);
+}
+
 int main()
 {
     int size = 15;
@@ -177,9 +213,18 @@ int main()
     std::cout << "------------------------------------\n";
 
     suffler(array, size);
+
     std::cout << "\n-----------MERGE SORT-----------\n";
     displayer(array, size);
     merge_sort<int>(array, 0, size);
+    displayer(array, size);
+    std::cout << "------------------------------------\n";
+
+    suffler(array, size);
+
+    std::cout << "\n-----------QUICK SORT-----------\n";
+    displayer(array, size);
+    quick_sort<int>(array, 0, size - 1);
     displayer(array, size);
     std::cout << "------------------------------------\n";
 }
