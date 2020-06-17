@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 template <class T>
-void displayer(T *arr, int size)
+void displayer(T arr[], int size)
 {
     for (int i = 0; i < size; i++)
     {
@@ -11,7 +11,7 @@ void displayer(T *arr, int size)
     std::cout << std::endl;
 }
 template <class T>
-void suffler(T *arr, int size)
+void suffler(T arr[], int size)
 {
     int newPos;
     for (int i = size - 1; i > 0; i--)
@@ -25,7 +25,7 @@ void suffler(T *arr, int size)
 
 // SELECTION SORT
 template <class T>
-void selection(T *arr, int size)
+void selection_sort(T arr[], int size)
 {
     for (int i = 0; i < size - 1; i++)
     {
@@ -43,21 +43,143 @@ void selection(T *arr, int size)
     }
 }
 
-int main()
+// BUBBLE SORT
+template <class T>
+void bubble_sort(T arr[], int size)
 {
-    int size = 10;
-    int *ptr = new int[size];
+    int unsorted = size - 1;
+    bool swap;
+
+    do
+    {
+        swap = false;
+        for (int i = 0; i < unsorted; i++)
+        {
+            if (arr[i] > arr[i + 1])
+            {
+                T temp = arr[i];
+                arr[i] = arr[i + 1];
+                arr[i + 1] = temp;
+                swap = true;
+            }
+        }
+        unsorted--;
+    } while (swap);
+}
+
+// INSERTION SORT
+template <class T>
+void insertion_sort(T arr[], int size)
+{
     for (int i = 0; i < size; i++)
     {
-        ptr[i] = (std::rand() % 100) + 1;
+        int j = i;
+        while (j >= 1 && arr[j] < arr[j - 1])
+        {
+            T temp = arr[j];
+            arr[j] = arr[j - 1];
+            arr[j - 1] = temp;
+            j--;
+        }
+    }
+}
+
+// MERGE SORT
+template <class T>
+void merge(T arr[], int start, int mid, int end)
+{
+    int sz1 = mid - start + 1;
+    int sz2 = end - mid;
+    int left[sz1], right[sz2];
+
+    for (int i = 0; i < sz1; i++)
+    {
+        left[i] = arr[start + i];
+    }
+    for (int i = 0; i < sz2; i++)
+    {
+        right[i] = arr[mid + 1 + i];
+    }
+
+    int l = 0, r = 0, a = start;
+    while (l < sz1 && r < sz2)
+    {
+        if (left[l] < right[r])
+        {
+            arr[a] = left[l];
+            l++;
+        }
+        else
+        {
+            arr[a] = right[r];
+            r++;
+        }
+        a++;
+    }
+    while (l < sz1)
+    {
+        arr[a] = left[l];
+        a++;
+        l++;
+    }
+    while (r < sz2)
+    {
+        arr[a] = right[r];
+        a++;
+        r++;
+    }
+}
+
+template <class T>
+void merge_sort(T arr[], int start, int end)
+{
+    if (start >= end)
+    {
+        return;
+    }
+
+    int mid = (start + end) / 2;
+
+    merge_sort<T>(arr, start, mid);
+    merge_sort<T>(arr, mid + 1, end);
+
+    merge<T>(arr, start, mid, end);
+}
+
+int main()
+{
+    int size = 15;
+    int array[size];
+    for (int i = 0; i < size; i++)
+    {
+        array[i] = (std::rand() % 100) + 1;
     }
     std::cout << "\n-----------SELECTION SORT-----------\n";
-    displayer(ptr, size);
-    selection<int>(ptr, size);
-    displayer(ptr, size);
+    displayer(array, size);
+    selection_sort<int>(array, size);
+    displayer(array, size);
     std::cout << "------------------------------------\n";
 
-    // displayer(ptr, size);
+    suffler(array, size);
 
-    delete[] ptr;
+    std::cout << "\n-----------BUBBLE SORT-----------\n";
+    displayer(array, size);
+    bubble_sort<int>(array, size);
+    displayer(array, size);
+    std::cout << "------------------------------------\n";
+
+    suffler(array, size);
+
+    std::cout << "\n-----------INSERTION SORT-----------\n";
+    displayer(array, size);
+    insertion_sort<int>(array, size);
+    displayer(array, size);
+    std::cout << "------------------------------------\n";
+
+    suffler(array, size);
+    std::cout << "\n-----------MERGE SORT-----------\n";
+    displayer(array, size);
+    merge_sort<int>(array, 0, size);
+    displayer(array, size);
+    std::cout << "------------------------------------\n";
 }
