@@ -1,6 +1,6 @@
 # custom dirs and files
 Material/
-./vscode
+.vscode/
 
 # c++
 # Prerequisites
