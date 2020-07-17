@@ -4,7 +4,7 @@
 
 // A special array is a non-empty array that contains either ints or special arrays.
 // The product sum is the sum of its elements multiplied by their depth
-// [x, y] = x + y [x,[y,z]] = x + 2 *(y + zi)
+// [x, y] = x + y [x,[y,z]] = x + 2 *(y + z)
 
 int productSum(std::vector<std::any> array, int level = 1)
 {

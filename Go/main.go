@@ -1,7 +1,7 @@
 package main
 
 import (
-	famous "./famous"
+	ds "./data-structures"
 	sort "./sort"
 	"fmt"
 )
@@ -13,7 +13,17 @@ func main() {
 	sort.Selection(myArray)
 	fmt.Println(myArray)
 
+	// GRAPH
+	graph := ds.NewNode("A").AddChildren("B", "C", "D")
+	graph.Children[0].AddChildren("E").AddChildren("F")
+	graph.Children[2].AddChildren("G").AddChildren("H")
+	graph.Children[0].Children[1].AddChildren("I").AddChildren("J")
+	graph.Children[2].Children[0].AddChildren("K")
 
-	fmt.Println(famous.NthFibRec(15))
-	fmt.Println(famous.NthFib(15))
+	var array []string
+	visited := make(map[string]bool)
+
+	result := graph.DepthFirstSearch(array, visited)
+
+	fmt.Println(result)
 }
