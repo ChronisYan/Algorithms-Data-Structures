@@ -2,6 +2,8 @@
 
 using namespace std;
 
+// return true if an array is non-increasing or non-decreasing otherwise return false
+
 bool isMonotonic(vector<int> array)
 {
     bool is_increasing = true;

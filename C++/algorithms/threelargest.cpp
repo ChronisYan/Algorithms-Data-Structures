@@ -4,6 +4,8 @@
 
 using namespace std;
 
+// return a vector/array of the 3 largest values(sorted) found in the input vector/array
+
 vector<int> findThreeLargestNumbers(vector<int> array)
 {
     vector<int> result = {INT_MIN, INT_MIN, INT_MIN};

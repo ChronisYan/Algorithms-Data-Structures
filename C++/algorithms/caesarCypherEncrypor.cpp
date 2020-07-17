@@ -1,6 +1,9 @@
 #include <iostream>
 #include <string>
 
+// in a string of lowercase characters shift each character by key
+// result should be a string of lowercase characters
+
 using namespace std;
 
 string caesarCypherEncryptor(string str, int key)
