@@ -23,16 +23,16 @@ func (n *Node) AddChildren(names ...string) *Node {
 
 // Traverse
 // Depth First Search (DFS)
-func (n *Node) DepthFirstSearch(array []string, visited map[string]bool) []string {
-	array = append(array, n.Name)
+func (n *Node) DepthFirstSearch(array *[]string, visited map[string]bool) []string {
+	*array = append(*array, n.Name)
 	visited[n.Name] = true
 	for _, child := range n.Children{
 		if _, ok := visited[child.Name]; !ok{
 			visited[child.Name] = true
-			array = child.DepthFirstSearch(array, visited)
+			*array = child.DepthFirstSearch(array, visited)
 		}
 	}
-	return array
+	return *array
 }
 // DFS for acyclic graph
 //func (n *Node) DepthFirstSearch(array []string) []string {

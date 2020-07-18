@@ -23,7 +23,7 @@ func main() {
 	var array []string
 	visited := make(map[string]bool)
 
-	result := graph.DepthFirstSearch(array, visited)
+	graph.DepthFirstSearch(&array, visited)
 
-	fmt.Println(result)
+	fmt.Println(array)
 }
