@@ -1,4 +1,4 @@
-package famous
+package algorithms
 
 func IsPalindrome(str string) bool {
 	left := 0

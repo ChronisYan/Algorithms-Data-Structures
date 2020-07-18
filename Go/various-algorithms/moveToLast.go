@@ -1,4 +1,4 @@
-package famous
+package algorithms
 
 func MoveElementToEnd(array []int, toMove int) []int {
 	i := 0

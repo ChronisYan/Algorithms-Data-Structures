@@ -1,4 +1,4 @@
-package famous
+package algorithms
 
 import "sort"
 

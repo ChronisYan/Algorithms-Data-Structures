@@ -1,4 +1,4 @@
-package famous
+package algorithms
 
 // NAIVE SOLUTION
 func NthFibRec(n int) int {
