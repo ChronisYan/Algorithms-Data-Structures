@@ -1,6 +1,6 @@
 
 // given a Binary Tree return the sum of all its Nodes' depth
-
+// Depth - distance between current Node and root Node
 class BinaryTree
 {
 public:
