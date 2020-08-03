@@ -1,5 +1,4 @@
 #include <iostream>
-#include <vector>
 
 // Given a N x N chessboard (N >= 4) place N queens so that no one can attack each other
 void displayer(int array[], int l)
