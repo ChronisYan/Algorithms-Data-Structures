@@ -1,6 +1,9 @@
 #include <iostream>
 #include <vector>
 
+// Backtracking algorithm: Main idea is to construct a recursive tree
+// and cut its dead ends (partial permutations that cannot be solutions)
+
 void displayer(std::vector<int> array)
 {
     std::cout << "[ ";
@@ -36,12 +39,13 @@ bool is_valid(std::vector<int> &arr)
     }
     return true;
 }
-
+int n_sol = 0;
 void generate_permutations(std::vector<int> &perm, int n)
 {
     if (perm.size() == n)
     {
         displayer(perm);
+        n_sol++;
         return;
     }
     for (int i = 0; i < n; i++)
@@ -65,5 +69,6 @@ int main()
     int N = 8;
     std::vector<int> board = {};
     generate_permutations(board, N);
+    std::cout << n_sol << std::endl;
     return 0;
 }
