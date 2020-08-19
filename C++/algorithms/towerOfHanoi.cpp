@@ -4,11 +4,12 @@
 class Game
 {
 public:
-    Game(int fields, int n_cubes)
+    Game(int n_cubes)
     {
-        _fields = fields;
+        FIELDS = 3;
+        n_moves = 0;
         _n_cubes = n_cubes;
-        for (int i = 0; i < _fields; i++)
+        for (int i = 0; i < FIELDS; i++)
         {
             std::vector<int> stack;
             board.push_back(stack);
@@ -20,7 +21,7 @@ public:
     }
     friend std::ostream &operator<<(std::ostream &os, Game &game)
     {
-        for (int i = 0; i < game._fields; i++)
+        for (int i = 0; i < game.FIELDS; i++)
         {
             std::cout << "Stack[" << (i + 1) << "] ";
             for (const int &item : game.board[i])
@@ -33,31 +34,40 @@ public:
     }
     void solve()
     {
-        
+        move(0, _n_cubes - 1, board[0], board[2], board[1]);
     }
 
+    int n_moves;
+
 private:
-    int _fields;
     int _n_cubes;
+    int FIELDS;
     std::vector<std::vector<int>> board;
-    bool is_inverted(std::vector<int> stack)
+    void move(unsigned start, unsigned end, std::vector<int> &source, std::vector<int> &target, std::vector<int> &spare)
     {
-        int j = _n_cubes;
-        for (int i = 0; i < _n_cubes; i++)
+        n_moves++;
+
+        if (start == end)
         {
-            if (stack[i] != j)
-            {
-                return false;
-            }
-            j--;
+            target.push_back(source.back());
+            source.pop_back();
         }
-        return true;
+        else
+        {
+            move(start + 1, end, source, spare, target);
+            move(start, start, source, target, spare);
+            move(start + 1, end, spare, target, source);
+        }
     }
 };
 
 int main()
 {
-    Game newGame(3, 4);
+    Game newGame(2);
     std::cout << newGame;
+    std::cout << "---Solution---" << std::endl;
+    newGame.solve();
+    std::cout << newGame;
+    std::cout << "Number of moves: " << newGame.n_moves << std::endl;
     return 0;
 }
