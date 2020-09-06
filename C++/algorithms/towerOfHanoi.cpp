@@ -63,7 +63,7 @@ private:
 
 int main()
 {
-    Game newGame(2);
+    Game newGame(4);
     std::cout << newGame;
     std::cout << "---Solution---" << std::endl;
     newGame.solve();
