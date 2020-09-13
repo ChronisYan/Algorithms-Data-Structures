@@ -52,9 +52,7 @@ private:
         Node *next;
         Node(T data) : data(data), next(nullptr){};
     };
-    // list.insert(4);
-    // list.insert(1);
-    // list.insert(5);
+
     Node *head_; // pointer to the first element of the list
 };
 
