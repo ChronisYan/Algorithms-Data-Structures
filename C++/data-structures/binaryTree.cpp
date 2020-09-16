@@ -10,3 +10,20 @@
 // Siblings: Nodes with the same parent.
 // Descendant: Node reachable by traversing children (Nodes in the Subtree).
 // Ancestor: Nodes reachable by traversing parents (Nodes on the path from the node to root).
+
+template <typename T>
+class BinaryTree
+{
+public:
+    // ...
+private:
+    class TreeNode
+    {
+    private:
+        T &data;
+        TreeNode *left, *right;
+        TreeNode(T &data) : data(data), left(nullptr), right(nullptr) {}
+    };
+
+    TreeNode *root_;
+};
