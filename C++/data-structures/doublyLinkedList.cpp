@@ -15,76 +15,67 @@ public:
 
     void setHead(Node *node)
     {
-        if (node == head_)
+        if (!head_ && !tail_)
+        {
+            head_ = node;
+            tail_ = node;
             return;
-
-        remove(node);
-        node->next = head_;
-        if (head_)
-            head_->prev = node;
-        head_ = node;
+        }
+        insertBefore(head_, node);
     }
 
     void setTail(Node *node)
     {
-        if (node == tail_)
+        if (!head_ && !tail_)
+        {
+            head_ = node;
+            tail_ = node;
             return;
-
-        remove(node);
-        node->prev = tail_;
-        if (tail_)
-            tail_->next = node;
-        tail_ = node;
+        }
+        insertAfter(tail_, node);
     }
 
     void insertBefore(Node *node, Node *nodeToInsert)
     {
-        if (node == head_)
-        {
-            setHead(nodeToInsert);
+        if (nodeToInsert == head_ && nodeToInsert == tail_)
             return;
-        }
 
         remove(nodeToInsert);
-        if (node->prev)
-        {
-            node->prev->next = nodeToInsert;
-            nodeToInsert->prev = node->prev;
-        }
+        nodeToInsert->prev = node->prev;
         nodeToInsert->next = node;
+        if (!node->prev)
+            head_ = nodeToInsert;
+        else
+            node->prev->next = nodeToInsert;
         node->prev = nodeToInsert;
     }
 
     void insertAfter(Node *node, Node *nodeToInsert)
     {
-        if (node == tail_)
-        {
-            setTail(nodeToInsert);
+        if (nodeToInsert == head_ && nodeToInsert == tail_)
             return;
-        }
 
         remove(nodeToInsert);
-        if (node->next)
-        {
-            node->next->prev = nodeToInsert;
-            nodeToInsert->next = node->next;
-        }
         nodeToInsert->prev = node;
+        nodeToInsert->next = node->next;
+        if (!node->next)
+            tail_ = nodeToInsert;
+        else
+            node->next->prev = nodeToInsert;
         node->next = nodeToInsert;
     }
 
     void insertAtPosition(int position, Node *nodeToInsert)
     {
         int i = 1;
-        Node *node = head_;
-        while (i < position)
-        {
-            node = node->next;
-            i++;
-            if (!node)
-                return;
-        }
-        insertBefore(node, nodeToInsert);
+        Node *cur = head_;
+        while (i++ < position && cur)
+            cur = cur->next;
+
+        if (!cur)
+            setTail(nodeToInsert);
+        else
+            insertBefore(cur, nodeToInsert);
     }
 
     void removeNodesWithValue(int value)
@@ -94,9 +85,9 @@ public:
         {
             if (cur->value == value)
             {
-                Node *new_cur = cur->next;
+                Node *next = cur->next;
                 remove(cur);
-                cur = new_cur;
+                cur = next;
                 continue;
             }
             cur = cur->next;
@@ -106,19 +97,10 @@ public:
     void remove(Node *node)
     {
         if (node == head_)
-            head_ = node->next;
-
+            head_ = head_->next;
         if (node == tail_)
-            tail_ = node->prev;
-
-        if (node->prev)
-            node->prev->next = node->next;
-
-        if (node->next)
-            node->next->prev = node->prev;
-
-        node->next = nullptr;
-        node->prev = nullptr;
+            tail_ = tail_->prev;
+        _unchain(node);
     }
 
     bool containsNodeWithValue(int value)
@@ -127,9 +109,7 @@ public:
         while (cur)
         {
             if (cur->value == value)
-            {
                 return true;
-            }
             cur = cur->next;
         }
         return false;
@@ -138,4 +118,13 @@ public:
 private:
     Node *head_;
     Node *tail_;
+    void _unchain(Node *node)
+    {
+        if (node->next)
+            node->next->prev = node->prev;
+        if (node->prev)
+            node->prev->next = node->next;
+        node->next = nullptr;
+        node->prev = nullptr;
+    }
 };
