@@ -1,4 +1,13 @@
-template <typename T>
+class Node
+{
+public:
+    int value;
+    Node *prev;
+    Node *next;
+
+    Node(int value) : value(value), prev(nullptr), next(nullptr){};
+};
+
 class DoublyLinkedList
 {
 public:
@@ -69,7 +78,7 @@ public:
             insertBefore(cur, nodeToInsert);
     }
 
-    void removeNodesWithValue(T value)
+    void removeNodesWithValue(int value)
     {
         Node *cur = head_;
         while (cur)
@@ -94,7 +103,7 @@ public:
         _unchain(node);
     }
 
-    bool containsNodeWithValue(T value)
+    bool containsNodeWithValue(int value)
     {
         Node *cur = head_;
         while (cur)
@@ -118,13 +127,4 @@ private:
         node->next = nullptr;
         node->prev = nullptr;
     }
-    class Node
-    {
-    public:
-        T value;
-        Node *prev;
-        Node *next;
-
-        Node(T value) : value(value), prev(nullptr), next(nullptr){};
-    };
 };
